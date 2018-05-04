@@ -1,0 +1,53 @@
+from socket import *
+import time
+import datetime
+from time import strftime
+import mysql.connector as mariadb
+
+# SQL Init
+mariadb_connection = mariadb.connect(user='root', password='root', host='localhost', port='3306', database='raspberry_database')
+cursor = mariadb_connection.cursor()
+
+# Ethernet init
+address= ( '192.168.254.100', 5000) #define server IP and port
+client_socket =socket(AF_INET, SOCK_DGRAM) #Set up the Socket
+client_socket.settimeout(1) #Only wait 1 second for a response
+
+while(1):
+
+    data = "Temperature" #Set data request to Temperature
+
+    client_socket.sendto( data, address) #Send the data request
+
+    try:
+
+        rec_data, addr = client_socket.recvfrom(2048) #Read response from arduino
+        temp = float(rec_data) #Convert string rec_data to float temp
+        print "The Measured Temperature is ", temp, " degrees." # Print the result
+	timeString = getDateTimeString()
+	
+	# uploadTemperatureToSQL(datetime, temp)
+
+    except Exception as e:
+	s = str(e)
+	print s
+        pass
+
+    time.sleep(2) #delay before sending next command
+    print ""
+
+def uploadTemperatureToSQL(datetime, temperature):
+	params = (datetime, temperature)
+	cursor.execute("INSERT INTO temperatureSensor(time, temp) VALUES ('%s', '%s');", params)
+	mariadb_connection.commit()
+	return
+
+	try:
+		dateTimeStr = (time.strftime("%Y-%m-%d ") + time.strftime("%H:%M:%S"))
+		print dateTimeStr
+	except Exception as e:
+		s = str(e)
+		print s
+	return dateTimeStr
+
+	

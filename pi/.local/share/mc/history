@@ -1,0 +1,10 @@
+[cmdline]
+0=quit
+1=10
+2=
+
+[Dir Hist New Right Panel]
+0=/home/pi
+
+[Dir Hist New Left Panel]
+0=/home/pi

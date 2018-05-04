@@ -1,0 +1,17 @@
+import mysql.connector as mariadb
+
+mariadb_connection = mariadb.connect(user='root', password='root', host='localhost', port='3306', database='raspberry_database')
+cursor = mariadb_connection.cursor()
+
+
+sqlQuery = ("""INSERT INTO temperatureSensor (time, temp) VALUES ('2016-06-18 10:34:09 AM', 5.24);INSERT INTO temperatureSensor (time, temp) VALUES ('2016-06-18 10:34:09 AM', 5.24);""")
+try:
+	cursor.execute(*sqlQuery)
+	mariadb_connection.commit()
+	print "PASS"
+except:
+	mariadb_connection.rollback()
+	print "Failed"
+
+mariadb_connection.close()
+

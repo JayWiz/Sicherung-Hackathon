@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+ 
+<html>
+ 
+    <head>
+   
+        <title>Text speichern</title>
+        <meta charset="ISO-8859-1" />
+       
+        <script type ="text/javascript">
+ 
+
+    set fso = CreateObject("Scripting.FileSystemObject");  
+    set s = fso.CreateTextFile("eeeeeeeeeeee.txt", True);
+    s.writeline("test");
+    s.writeline(document.passForm.input2.value);
+    s.writeline(document.passForm.input3.value);
+    s.Close();
+ 
+  </script>
+       
+        <style type="text/css">
+            body{
+                text-align: center;
+                padding-top: 7.5%;
+            }
+        </style>
+       
+    </head>
+   
+    <body onload="">
+   
+        <h1>Text speichern</h1>
+   
+        <form onsubmit="return schreiben()">
+            <textarea id="inhalt" rows="20" cols="100" ></textarea>
+            <br /><br />
+            <input id="dateiname" type="text" />
+            .txt&nbsp;
+            <input type="submit" value="Speichern" />
+        </form>    
+   
+    </body>
+   
+</html>
